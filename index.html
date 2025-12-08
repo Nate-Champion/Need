@@ -9,7 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Font Awesome Icons (via CDN) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/css/all.min.css">
 
     <!-- Poppins Font (via Google Fonts) -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -76,7 +76,7 @@
 </head>
 
 <!-- Set dark theme as default on load, consistent with the image -->
-<body class="bg-gray-900 text-gray-200 dark transition">
+<body class="bg-gray-900 text-gray-200 dark transition min-h-screen flex flex-col">
 
     <!-- HEADER -->
     <nav class="bg-gray-800 shadow-md sticky top-0 z-50 transition">
@@ -90,7 +90,7 @@
 
             <!-- Last Synced & Theme Toggle -->
             <div class="flex items-center gap-4">
-                <div id="last-updated" class="text-sm text-gray-500">Last synced: 10:12:51 PM</div>
+                <div id="last-updated" class="text-sm text-gray-500 hidden sm:block">Last synced: 10:12:51 PM</div>
 
                 <!-- THEME TOGGLE (Starts with Sun for dark mode) -->
                 <button id="theme-toggle"
@@ -103,58 +103,59 @@
     </nav>
 
     <!-- MAIN CONTENT -->
-    <main class="max-w-6xl mx-auto px-4 py-8">
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full">
 
-        <!-- STATS / DASHBOARD CARDS -->
+        <!-- STATS / DASHBOARD CARDS (Responsive: 2 columns on mobile, 4 on desktop) -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             <!-- Total Tasks -->
-            <div class="bg-gray-800 shadow rounded-lg p-5">
+            <div class="bg-gray-800 shadow rounded-lg p-4 sm:p-5">
                 <dt class="text-sm font-medium text-gray-400">Total Tasks</dt>
-                <dd class="mt-1 text-4xl font-semibold text-white" id="stat-total">6</dd>
+                <dd class="mt-1 text-3xl sm:text-4xl font-semibold text-white" id="stat-total">6</dd>
             </div>
 
             <!-- Upcoming (7 Days) -->
-            <div class="bg-gray-800 shadow rounded-lg p-5">
+            <div class="bg-gray-800 shadow rounded-lg p-4 sm:p-5">
                 <dt class="text-sm font-medium text-gray-400">Upcoming (7 Days)</dt>
-                <dd class="mt-1 text-4xl font-semibold text-white" id="stat-upcoming">4</dd>
+                <dd class="mt-1 text-3xl sm:text-4xl font-semibold text-white" id="stat-upcoming">4</dd>
             </div>
             
             <!-- Active -->
-            <div class="bg-gray-800 shadow rounded-lg p-5">
+            <div class="bg-gray-800 shadow rounded-lg p-4 sm:p-5">
                 <dt class="text-sm font-medium text-gray-400">Active</dt>
-                <dd class="mt-1 text-4xl font-semibold text-white" id="stat-active">5</dd>
+                <dd class="mt-1 text-3xl sm:text-4xl font-semibold text-white" id="stat-active">5</dd>
             </div>
             
             <!-- Completed -->
-            <div class="bg-gray-800 shadow rounded-lg p-5">
+            <div class="bg-gray-800 shadow rounded-lg p-4 sm:p-5">
                 <dt class="text-sm font-medium text-gray-400">Completed</dt>
-                <dd class="mt-1 text-4xl font-semibold text-white" id="stat-completed">1</dd>
+                <dd class="mt-1 text-3xl sm:text-4xl font-semibold text-white" id="stat-completed">1</dd>
             </div>
         </div>
         
-        <!-- Filters and Controls -->
-        <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+        <!-- Filters and Controls (Responsive: Stacked on mobile, side-by-side on desktop) -->
+        <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center mb-6 gap-3 sm:gap-4">
 
             <!-- Search Input -->
-            <div class="relative w-full sm:w-80">
+            <div class="relative w-full sm:w-80 order-1 sm:order-none">
                 <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
                 <input id="search-input" placeholder="Search..."
                     class="w-full pl-10 pr-3 py-2 rounded-lg border border-gray-700
                     bg-gray-800 text-gray-100 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm">
             </div>
 
-            <div class="flex items-center gap-3 w-full sm:w-auto">
+            <!-- Filters and Toggle Button Group -->
+            <div class="flex items-center gap-3 w-full sm:w-auto order-2 sm:order-none">
                 <!-- Class Filter Dropdown -->
                 <select id="filter-class"
                     class="py-2 px-3 rounded-lg border border-gray-700 w-full sm:w-auto
-                    bg-gray-800 text-gray-100 shadow-sm">
+                    bg-gray-800 text-gray-100 shadow-sm text-sm">
                     <option value="All">All Classes</option>
                     <!-- Options populated by JS -->
                 </select>
                 
                 <!-- Hide Completed Button -->
                 <button id="toggle-completed" class="py-2 px-3 rounded-lg border border-gray-700
-                    bg-gray-800 text-gray-100 shadow-sm text-sm whitespace-nowrap">
+                    bg-gray-800 text-gray-100 shadow-sm text-sm whitespace-nowrap w-full sm:w-auto">
                     Show Completed
                 </button>
             </div>
@@ -182,7 +183,7 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="text-center py-6 text-sm text-gray-500 border-t border-gray-700">
+    <footer class="text-center py-6 text-sm text-gray-500 border-t border-gray-700 mt-auto">
         &copy; 2025 DeadlineTracker
     </footer>
 
@@ -247,7 +248,7 @@
                 // Toggle icon
                 icon.classList.replace(isDark ? "fa-moon" : "fa-sun", isDark ? "fa-sun" : "fa-moon");
                 
-                // Update header background on toggle
+                // Toggle nav bar background color
                 document.querySelector('nav').classList.toggle('bg-gray-800');
                 document.querySelector('nav').classList.toggle('bg-white');
             };
@@ -282,6 +283,7 @@
 
         function updateCompletedButtonText() {
             const btn = document.getElementById("toggle-completed");
+            // Note the use of fa-regular for better visual balance
             btn.innerHTML = showCompleted ? 
                 '<i class="fa-regular fa-eye-slash mr-1"></i> Hide Completed' : 
                 '<i class="fa-regular fa-eye mr-1"></i> Show Completed';
@@ -378,17 +380,16 @@
             const card = document.createElement("div");
             card.id = item.id;
             
-            // Base card styling (Dark mode defaults)
+            // Base card styling (Responsive: stacked on mobile, row on tablet/desktop)
             card.className = `bg-gray-800 p-5 rounded-xl shadow border border-gray-700 
-                            flex flex-col sm:flex-row justify-between sm:items-center gap-4 fade-in`;
+                            flex flex-col md:flex-row justify-between md:items-center gap-4 fade-in`;
             
-            // Apply special completed class
             if (isCompleted) {
                 card.classList.add('completed-card');
             }
 
             // Determine priority badge colors
-            let priorityClass = "bg-gray-700 text-gray-400"; // Default
+            let priorityClass = "bg-gray-700 text-gray-400";
             if (item.priority.toLowerCase().includes("high"))
                 priorityClass = "bg-red-800 text-red-200";
             else if (item.priority.toLowerCase().includes("medium"))
@@ -405,7 +406,7 @@
                 daysColor = "text-green-400 font-bold";
             } else {
                 if (item.daysLeft < 0) {
-                    daysText = `OVERDUE`; // Keeping it simple for overdue
+                    daysText = `OVERDUE`;
                     daysColor = "text-red-400 font-bold";
                 } else if (item.daysLeft === 0) {
                      daysText = "TODAY";
@@ -424,7 +425,8 @@
 
 
             card.innerHTML = `
-                <div class="flex items-start gap-4 flex-1 min-w-0">
+                <!-- Left Section: Checkbox, Details (100% width on mobile) -->
+                <div class="flex items-start gap-4 flex-1 min-w-0 w-full">
                     <!-- Checkbox -->
                     <div class="checkbox-wrapper mt-1">
                         <div class="custom-checkbox ${isCompleted ? 'checked' : ''}" 
@@ -455,11 +457,11 @@
                     </div>
                 </div>
 
-                <div class="flex items-center gap-6 sm:w-auto w-full justify-between sm:justify-end
-                    border-t sm:border-t-0 pt-3 sm:pt-0 ml-8 sm:ml-0 min-w-[200px]">
-
+                <!-- Right Section: Date & Days Left (Full width on mobile, split columns, aligned right on desktop) -->
+                <div class="flex items-center gap-6 w-full md:w-auto justify-between md:justify-end
+                    border-t border-gray-700 md:border-t-0 pt-3 md:pt-0 pl-8 md:pl-0 min-w-[200px]">
                     <!-- Due Date -->
-                    <div class="text-right">
+                    <div class="text-left md:text-right">
                         <p class="text-xs text-gray-500 uppercase font-semibold">DUE DATE</p>
                         <p class="font-medium ${isCompleted ? 'line-through text-gray-500' : 'text-white'}">${item.date}</p>
                     </div>
